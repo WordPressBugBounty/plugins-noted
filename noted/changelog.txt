@@ -1,0 +1,26 @@
+== Changelog ==
+
+= 2.0.1 =
+* Fixed: Block notes on server-rendered (dynamic) blocks no longer fail attribute validation.
+* Fixed: Noted panel uses full width on narrow viewports (still capped at 400px).
+* Fixed: Settings page wireframe assets load correctly on Windows when the package path contains backslashes.
+
+= 2.0 =
+* New: Page-level notes — attach notes to any post or page from the block editor sidebar or the classic editor.
+* New: Block-level notes — leave a note on any individual block in the editor. Notes travel with the block when copied or pasted.
+* New: Pin your most important notes to keep them at the top of the list.
+* New: Pinned Notes dashboard widget so the things you need to remember are waiting for you when you log in.
+* New: Settings page under Tools → Noted! to turn features on or off, control who sees what, and back up your settings.
+* New: Role-based access — by default only administrators can see and manage notes (same as before), but you can now lower the bar to let editors, authors, or contributors view or manage them.
+* New: Markdown reference tab so you can see exactly which formatting is supported.
+* New: Import and export your settings as a JSON file.
+* New: Optional "delete all data on uninstall" toggle — off by default so upgrades stay safe.
+* New: Translation-ready — the plugin can now be translated into other languages.
+* New: Now respects your WordPress admin color scheme.
+* Improved: Compatability support for multiple plugins that dequeue all plugin scripts on their admin page
+* Improved: Cleaner, faster note panel with a tidier date format.
+* Improved: Empty notes (no title and no body) are hidden from the list automatically.
+* Improved: Better safeguards so notes can only be attached to posts you have permission to edit.
+
+= 1.0 =
+* Initial release of the Noted! plugin.

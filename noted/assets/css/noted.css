@@ -1,0 +1,748 @@
+#noted-panel * {
+    box-sizing: border-box;
+}
+
+/* Side Panel */
+#noted-panel,
+.wp-admin-styling #noted-panel {
+    position: fixed;
+    right: 0;
+    top: 0;
+    max-width: 400px;
+    width: 100%;
+    height: 100%;
+    max-height: calc(100vh - var(--wp-admin--admin-bar--height, 0px));
+    background-color: #fff;
+    border-left: 1px solid #ccc;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    z-index: 9999;
+    padding: 20px;
+    overflow-y: scroll;
+    font-family: -apple-system, "system-ui", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: .875rem;
+    color: rgb(51, 51, 51);
+    box-sizing: border-box;
+}
+
+.has-visible-admin-bar #noted-panel {
+    margin-top: 32px;
+}
+
+.noted-content h2,
+.wp-admin-styling .noted-content h2 {
+    margin-top: 0;
+    font-family: -apple-system, "system-ui", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: rgb(51, 51, 51);
+    margin-bottom: 1em;
+}
+
+/* Panel in "open" state slides into view */
+#noted-panel.open {
+    transform: translateX(0);
+}
+
+/* Style the admin bar button */
+.noted-icon {
+    cursor: pointer;
+}
+
+/* Form layout in the floating panel — relies on `.widefat` for the input
+   chrome (loaded via the core `buttons`/admin form CSS, plus the fallback
+   block below for frontend contexts where forms.css isn't enqueued). */
+#noted-form .noted-field {
+    margin: 0 0 14px;
+}
+
+#noted-form label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: .875rem;
+}
+
+/* Minimal `.widefat` styling for frontend contexts where wp-admin's
+   forms.css isn't loaded — matches the admin look closely enough. */
+#noted-panel input.widefat,
+#noted-panel textarea.widefat {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #8c8f94;
+    border-radius: 2px;
+    background: #fff;
+    color: #2c3338;
+    font-size: 14px;
+    line-height: 1.5;
+    box-shadow: none;
+}
+
+#noted-panel input.widefat:focus,
+#noted-panel textarea.widefat:focus {
+    border-color: var(--wp-admin-theme-color, #3858e9);
+    box-shadow: 0 0 0 1px var(--wp-admin-theme-color, #3858e9);
+    outline: 2px solid transparent;
+}
+
+
+/* Styling for the notes list */
+#noted-list {
+    margin-top: 24px;
+}
+
+/* ─── Unified note card ─────────────────────────────────────────── */
+.noted-card {
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 12px;
+    border-radius: 2px;
+    font-size: .875rem;
+    background: #fff;
+}
+
+.noted-card:last-child {
+    margin-bottom: 0;
+}
+
+/* Dashboard widget: borderless cards, larger gap separates them visually. */
+.noted-dashboard-widget {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.noted-dashboard-widget .noted-card {
+    padding: 0;
+    border: 0;
+    margin: 0;
+    background: transparent;
+}
+
+/* Pinned notes get a left accent so they stand out at a glance. */
+.noted-card.is-pinned {
+    border-left: 3px solid var(--wp-admin-theme-color, #3858e9);
+    padding-left: 10px;
+}
+
+/* Inline pin icon on the right of the head — pure CSS via a masked
+   pseudo-element so no markup change is needed on any surface. */
+.noted-card.is-pinned .noted-card__head::after {
+    content: '';
+    flex-shrink: 0;
+    align-self: center;
+    width: 14px;
+    height: 14px;
+    background-color: var(--wp-admin-theme-color, #3858e9);
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z'/></svg>") no-repeat center / contain;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z'/></svg>") no-repeat center / contain;
+}
+
+.noted-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.noted-card__title {
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.noted-card__actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+    font-size: .75rem;
+    align-items: baseline;
+    margin-top: 8px;
+}
+
+
+.noted-card__body {
+    margin-top: 8px;
+    color: #333;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.noted-card__body p {
+    margin-block: 0.5em;
+    font-size: .875rem;
+}
+
+.noted-card__body p:first-child {
+    margin-top: 0;
+}
+
+.noted-card__body p:last-child {
+    margin-bottom: 0;
+}
+
+.noted-card__body>*:last-child {
+    margin-bottom: 0;
+}
+
+.noted-card__meta {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    color: #888;
+    font-size: .75rem;
+}
+
+/* Collapsible variant — used by every surface (floating panel, editor
+   sidebar, classic meta box). Uses max-height for animation so it works
+   in every browser, not just those with `interpolate-size` support. */
+.noted-card--collapsible button.noted-card__title {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    font: inherit;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    word-break: break-word;
+}
+
+.noted-card--collapsible button.noted-card__title:focus-visible {
+    outline: 2px solid var(--wp-admin-theme-color, #3858e9);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+.noted-card--collapsible button.noted-card__title::before {
+    content: '';
+    display: inline-block;
+    flex-shrink: 0;
+    width: 0;
+    height: 0;
+    margin-right: 6px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid currentColor;
+    opacity: 0.55;
+    transform: rotate(-90deg);
+    transition: transform 0.2s ease;
+}
+
+.noted-card--collapsible.is-expanded button.noted-card__title::before {
+    transform: rotate(0);
+}
+
+/* `visibility: hidden` removes the subtree from the keyboard tab order and
+   the accessibility tree when collapsed. Delayed via the transition so
+   the content stays visible during the close animation, then disappears
+   the instant max-height reaches 0. */
+.noted-card--collapsible .noted-card__collapsible {
+    overflow: hidden;
+    max-height: 0;
+    visibility: hidden;
+    transition: max-height 0.25s ease, visibility 0s linear 0.25s;
+}
+
+.noted-card--collapsible.is-expanded .noted-card__collapsible {
+    max-height: 800px;
+    visibility: visible;
+    transition: max-height 0.25s ease, visibility 0s linear 0s;
+}
+
+/* Inline edit form inside a card */
+.noted-card__edit-form {
+    margin-top: 8px;
+}
+
+.noted-card__edit-form .components-base-control {
+    margin-bottom: 12px;
+}
+
+.noted-card__edit-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.noted-card.is-editing .noted-card__head {
+    cursor: default;
+}
+
+/* In edit mode the head actions disappear so the title input fills the row. */
+.noted-card.is-editing .noted-card__actions {
+    display: none;
+}
+
+.noted-card.is-editing .noted-card__title {
+    flex: 1;
+    min-width: 0;
+}
+
+.noted-card.is-editing .noted-card__title input {
+    width: 100%;
+}
+
+/* View-only state — hide every add/edit/delete affordance. */
+.is-view-only .noted-card__actions,
+.is-view-only .noted-metabox-add,
+.is-view-only #noted-form {
+    display: none;
+}
+
+
+.noted-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    padding: 8px;
+    transition: all .25s ease;
+}
+
+.noted-close-button:hover {
+    color: rgb(51, 51, 51);
+    background: transparent;
+}
+
+#noted-panel a {
+    color: var(--wp-admin-theme-color, #3858e9);
+    text-decoration: underline;
+}
+
+#noted-panel a:hover {
+    color: var(--wp-admin-theme-color-darker-10, #2145e6);
+}
+
+.edit-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+#noted-description,
+.edit-note-description {
+    min-height: calc(4em + (3 * 1.5em));
+}
+
+.edit-note-description {
+    min-height: 150px;
+}
+
+
+.noted-card__body ul,
+.noted-card__body ol {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 0.5em 0;
+}
+
+.noted-card__body ol {
+    list-style-type: decimal;
+}
+
+.noted-card__body ul ul,
+.noted-card__body ol ul {
+    list-style-type: circle;
+    margin: 0.3em 0;
+}
+
+.noted-card__body ul ul ul,
+.noted-card__body ol ul ul {
+    list-style-type: square;
+}
+
+.noted-card__body ol ol,
+.noted-card__body ul ol {
+    list-style-type: lower-alpha;
+    margin: 0.3em 0;
+}
+
+.noted-card__body ol ol ol,
+.noted-card__body ul ol ol {
+    list-style-type: lower-roman;
+}
+
+.noted-card__body li {
+    margin-bottom: 0.2em;
+}
+
+/* Base heading styles for notes */
+.noted-card__body h1,
+.noted-card__body h2,
+.noted-card__body h3,
+.noted-card__body h4,
+.noted-card__body h5,
+.noted-card__body h6 {
+    font-family: -apple-system, "system-ui", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 1.5em 0 0.5em;
+    color: rgb(51, 51, 51);
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+/* Individual heading sizes */
+.noted-card__body h1 {
+    font-size: 2em;
+    margin-top: 0.67em;
+}
+
+.noted-card__body h2 {
+    font-size: 1.5em;
+    margin-top: 0.83em;
+}
+
+.noted-card__body h3 {
+    font-size: 1.17em;
+    margin-top: 1em;
+}
+
+.noted-card__body h4 {
+    font-size: 1em;
+    margin-top: 1.33em;
+}
+
+.noted-card__body h5 {
+    font-size: 0.83em;
+    margin-top: 1.67em;
+}
+
+.noted-card__body h6 {
+    font-size: 0.67em;
+    margin-top: 2.33em;
+}
+
+/* First heading in the note should have no top margin */
+.noted-card__body>h1:first-child,
+.noted-card__body>h2:first-child,
+.noted-card__body>h3:first-child,
+.noted-card__body>h4:first-child,
+.noted-card__body>h5:first-child,
+.noted-card__body>h6:first-child {
+    margin-top: 0;
+}
+
+/* Markdown help link + settings reference layout */
+.noted-description-label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+}
+
+/* Let the Markdown tooltip escape horizontal clipping in the block sidebar */
+.noted-editor-panel,
+.noted-editor-form {
+    overflow-x: visible;
+}
+
+a.noted-markdown-doc-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+    vertical-align: middle;
+    text-transform: capitalize;
+}
+
+a.noted-markdown-doc-link .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    line-height: 1;
+    color: #646970;
+}
+
+/*
+ * Tooltip (::after): show *below* the icon and align to its left edge.
+ * Above-the-icon + horizontal centering clips in narrow sidebars; below
+ * sits over the full-width field area with room to grow to the right.
+ */
+a.noted-markdown-doc-link[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: calc(100% + 6px);
+    bottom: auto;
+    left: 0;
+    right: auto;
+    transform: none;
+    padding: 6px 10px;
+    background-color: #1d2327;
+    color: #fff;
+    border-radius: 2px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: left;
+    white-space: normal;
+    overflow-wrap: break-word;
+    width: max-content;
+    max-width: 248px;
+    box-sizing: border-box;
+    z-index: 100000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+a.noted-markdown-doc-link[data-tooltip]:hover::after,
+a.noted-markdown-doc-link[data-tooltip]:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+a.noted-markdown-doc-link[data-tooltip]:focus {
+    outline: none;
+}
+
+.noted-metabox-description-wrap .noted-metabox-markdown-help {
+    margin: 6px 0 0;
+}
+
+.noted-metabox-markdown-help {
+    margin: 6px 0 0;
+}
+
+/* Markdown reference tab (HTML blocks inside wp-wireframe) */
+.noted-md-doc {
+    max-width: 52rem;
+}
+
+.wireframe-html .noted-md-doc p {
+    margin: 0 0 1em;
+}
+
+.noted-md-doc__block:not(:last-child) {
+    margin: 0 0 1.5rem;
+}
+
+.noted-md-doc__title {
+    margin: 0 0 0.35rem;
+    font-size: 1rem;
+}
+
+.noted-md-doc__intro {
+    margin: 0 0 0.65rem;
+    color: #50575e;
+    font-size: 0.875rem;
+}
+
+.noted-md-doc__sample {
+    margin: 0;
+    padding: 12px 14px;
+    background: #1d2327;
+    color: #f0f0f1;
+    border-radius: 2px;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    overflow-x: auto;
+}
+
+.noted-md-doc__sample code {
+    font-family: ui-monospace, SFMono-Regular, Consolas, Menlo, monospace;
+    white-space: pre;
+    background: transparent;
+    color: inherit;
+}
+
+.noted-md-doc__list {
+    margin: 0.35rem 0 0 1.1rem;
+    padding: 0;
+    font-size: 0.875rem;
+    color: #50575e;
+    list-style-type: disc;
+}
+
+.noted-md-doc__list li {
+    margin-bottom: 0.25rem;
+}
+
+/* Tabs (Global / This Post) */
+.noted-tabs {
+    display: flex;
+    gap: 4px;
+    margin: 0 0 14px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.noted-tab {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #555;
+    cursor: pointer;
+    margin-bottom: -1px;
+}
+
+.noted-tab:hover {
+    color: #111;
+}
+
+.noted-tab.is-active {
+    color: var(--wp-admin-theme-color, #3858e9);
+    border-bottom-color: var(--wp-admin-theme-color, #3858e9);
+}
+
+.noted-empty {
+    color: #888;
+    font-style: italic;
+    padding: 8px 4px;
+}
+
+/* Classic editor meta box */
+.noted-metabox-add {
+    margin-top: 10px;
+}
+
+.noted-metabox-list .noted-card {
+    margin-bottom: 8px;
+}
+
+/* Block-level note panel */
+.noted-block-panel textarea {
+    width: 100%;
+    min-height: 80px;
+}
+
+/* Toolbar popover (Link-UI-style) */
+.noted-block-note-popover .noted-block-note-popover__inner {
+    padding: 12px;
+    min-width: 280px;
+}
+
+.noted-block-note-popover textarea {
+    width: 100%;
+    min-height: 90px;
+}
+
+/* Last-editor line + read-only display */
+.noted-block-note-author,
+.noted-block-note-readonly__meta {
+    margin: 8px 0 0;
+    color: #757575;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.noted-block-note-readonly__text {
+    white-space: pre-wrap;
+    color: #1e1e1e;
+    margin: 0;
+}
+
+.noted-block-note-readonly__text p:not(:last-child) {
+    margin: 0 0 8px;
+}
+
+/* Shared notification dot — corner overlay on an icon */
+.noted-icon-with-dot {
+    position: relative;
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    line-height: 0;
+}
+
+.noted-dot {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #d63638;
+    box-shadow: 0 0 0 2px #fff;
+}
+
+/* Inline variant — sits next to text (e.g. PanelBody title) */
+.noted-dot--inline {
+    position: static;
+    box-shadow: none;
+    margin-left: 6px;
+    width: 8px;
+    height: 8px;
+}
+
+.noted-panel-title {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Editor PluginSidebar */
+.noted-editor-panel {
+    padding: 16px;
+}
+
+.noted-editor-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.noted-editor-tab {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    padding: 6px 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+    cursor: pointer;
+    margin-bottom: -1px;
+}
+
+.noted-editor-tab:hover {
+    color: #111;
+}
+
+.noted-editor-tab.is-active {
+    color: var(--wp-admin-theme-color, #3858e9);
+    border-bottom-color: var(--wp-admin-theme-color, #3858e9);
+}
+
+.noted-editor-form .components-base-control {
+    margin-bottom: 16px;
+}
+
+.noted-editor-form .components-base-control__label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    position: relative;
+}
+
+.noted-editor-form .components-button {
+    margin-top: 4px;
+}
+
+.noted-editor-sep {
+    border: 0;
+    border-top: 1px solid #e0e0e0;
+    margin: 18px 0;
+}
+
+.noted-editor-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

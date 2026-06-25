@@ -1,0 +1,24 @@
+{
+  "name": "kylevandeusen/noted",
+  "description": "A simple note-taking system within the WordPress admin.",
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=8.1",
+    "tdrayson/wp-wireframe": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Noted\\": "includes/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/tdrayson/wp-wireframe"
+    }
+  ],
+  "config": {
+    "vendor-dir": "vendor",
+    "optimize-autoloader": true
+  }
+}

@@ -1,0 +1,332 @@
+# Copyright (C) 2026 Kyle Van Deusen
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Noted! 2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/noted\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-05-12T11:10:17+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: noted\n"
+
+#. Plugin Name of the plugin
+#: noted.php
+msgid "Noted!"
+msgstr ""
+
+#. Description of the plugin
+#: noted.php
+msgid "A simple note-taking system within the WordPress admin. Page-level and block-level notes included."
+msgstr ""
+
+#. Author of the plugin
+#: noted.php
+msgid "Kyle Van Deusen"
+msgstr ""
+
+#: includes/AdminBar.php:68
+msgid "Close notes"
+msgstr ""
+
+#: includes/AdminBar.php:70
+#: includes/PageNotes.php:53
+msgid "Notes"
+msgstr ""
+
+#: includes/AdminBar.php:73
+msgid "Global"
+msgstr ""
+
+#: includes/AdminBar.php:74
+msgid "This Post"
+msgstr ""
+
+#: includes/AdminBar.php:79
+#: includes/PageNotes.php:135
+msgid "Title"
+msgstr ""
+
+#: includes/AdminBar.php:84
+#: includes/PageNotes.php:137
+msgid "Description"
+msgstr ""
+
+#: includes/AdminBar.php:98
+#: includes/PageNotes.php:150
+msgid "Add Note"
+msgstr ""
+
+#: includes/DashboardWidget.php:43
+msgid "Pinned Notes"
+msgstr ""
+
+#: includes/DashboardWidget.php:58
+msgid "Pin a note to see it on your dashboard."
+msgstr ""
+
+#: includes/DashboardWidget.php:75
+#: includes/PageNotes.php:102
+msgid "(untitled)"
+msgstr ""
+
+#. translators: 1: WordPress username, 2: Date and time string.
+#: includes/DashboardWidget.php:82
+#: includes/PageNotes.php:125
+#, php-format
+msgid "%1$s · %2$s"
+msgstr ""
+
+#: includes/MarkdownReference.php:53
+msgid "Headings"
+msgstr ""
+
+#: includes/MarkdownReference.php:54
+msgid "Start the line with one to six # characters, then a space."
+msgstr ""
+
+#: includes/MarkdownReference.php:63
+msgid "Bold and italic"
+msgstr ""
+
+#: includes/MarkdownReference.php:64
+msgid "Use asterisks or underscores. These can appear in the middle of a line."
+msgstr ""
+
+#: includes/MarkdownReference.php:73
+msgid "Links"
+msgstr ""
+
+#: includes/MarkdownReference.php:74
+msgid "Labelled links, autolinks in angle brackets, or bare URLs on their own line or after a space."
+msgstr ""
+
+#: includes/MarkdownReference.php:87
+msgid "Lists"
+msgstr ""
+
+#: includes/MarkdownReference.php:88
+msgid "Unordered lines start with \"- \" (dash + space). Ordered lines start with \"1. \", \"2. \", and so on. Indent with spaces to nest lists."
+msgstr ""
+
+#: includes/MarkdownReference.php:122
+msgid "Not supported"
+msgstr ""
+
+#: includes/MarkdownReference.php:123
+msgid "Noted does not parse full CommonMark or GitHub-Flavored Markdown. Treat these as plain text:"
+msgstr ""
+
+#: includes/MarkdownReference.php:137
+msgid "Fenced code blocks (triple backticks) and inline `code` ticks"
+msgstr ""
+
+#: includes/MarkdownReference.php:138
+msgid "Images, blockquotes, horizontal rules, tables, footnotes"
+msgstr ""
+
+#: includes/MarkdownReference.php:139
+msgid "Strikethrough, task checkboxes, and other extensions"
+msgstr ""
+
+#: includes/PageNotes.php:80
+msgid "No notes on this post yet."
+msgstr ""
+
+#: includes/PageNotes.php:113
+msgid "Unpin"
+msgstr ""
+
+#: includes/PageNotes.php:113
+msgid "Pin"
+msgstr ""
+
+#: includes/PageNotes.php:116
+msgid "Edit"
+msgstr ""
+
+#: includes/PageNotes.php:119
+msgid "Delete"
+msgstr ""
+
+#: includes/PageNotes.php:138
+msgid "Write your note…"
+msgstr ""
+
+#: includes/RestApi.php:180
+msgid "A note needs either a title or a body."
+msgstr ""
+
+#: includes/RestApi.php:204
+msgid "Failed to save note"
+msgstr ""
+
+#: includes/RestApi.php:253
+msgid "Failed to update note"
+msgstr ""
+
+#: includes/RestApi.php:287
+msgid "Failed to delete note"
+msgstr ""
+
+#: includes/RestApi.php:344
+msgid "Note not found."
+msgstr ""
+
+#: includes/RestApi.php:362
+msgid "Attached post not found."
+msgstr ""
+
+#: includes/RestApi.php:370
+msgid "You cannot attach a note to that post."
+msgstr ""
+
+#. translators: 1: Link purpose, 2: Screen reader hint that the link opens a new browser tab.
+#: includes/Settings.php:198
+#, php-format
+msgid "%1$s %2$s"
+msgstr ""
+
+#: includes/Settings.php:199
+msgid "View supported Markdown"
+msgstr ""
+
+#: includes/Settings.php:200
+msgid "(opens in a new tab)"
+msgstr ""
+
+#: includes/Settings.php:209
+msgid "Limited Markdown Support (titles, bold, italic, lists, & links)"
+msgstr ""
+
+#: includes/Settings.php:227
+msgid "Features"
+msgstr ""
+
+#: includes/Settings.php:232
+msgid "Enable page-level notes"
+msgstr ""
+
+#: includes/Settings.php:233
+msgid "Adds a Notes sidebar to the block editor (and a classic-editor meta box fallback)."
+msgstr ""
+
+#: includes/Settings.php:239
+msgid "Enable block-level notes"
+msgstr ""
+
+#: includes/Settings.php:240
+msgid "Adds a Note field to every block in the editor. Stored inline on the block."
+msgstr ""
+
+#: includes/Settings.php:246
+msgid "Show the floating panel"
+msgstr ""
+
+#: includes/Settings.php:247
+msgid "The admin-bar Noted! button that opens the side panel."
+msgstr ""
+
+#: includes/Settings.php:253
+msgid "Show pinned notes on the dashboard"
+msgstr ""
+
+#: includes/Settings.php:254
+msgid "Adds a widget to the WordPress dashboard that lists every pinned note."
+msgstr ""
+
+#: includes/Settings.php:261
+msgid "Access"
+msgstr ""
+
+#: includes/Settings.php:262
+msgid "View grants read-only access. Manage grants full add / edit / delete rights."
+msgstr ""
+
+#: includes/Settings.php:267
+msgid "Minimum role to view notes"
+msgstr ""
+
+#: includes/Settings.php:268
+msgid "Users at this role and above can see Noted! surfaces."
+msgstr ""
+
+#: includes/Settings.php:276
+msgid "Minimum role to manage notes"
+msgstr ""
+
+#: includes/Settings.php:277
+msgid "Users below this role can view notes but cannot add, edit, or delete them."
+msgstr ""
+
+#: includes/Settings.php:286
+msgid "Maintenance"
+msgstr ""
+
+#: includes/Settings.php:287
+msgid "Back up, restore, or wipe Noted! data."
+msgstr ""
+
+#: includes/Settings.php:292
+msgid "Delete all data on uninstall"
+msgstr ""
+
+#: includes/Settings.php:293
+msgid "When the plugin is deleted, remove every note, strip block-level notes, and clear plugin settings. Off by default — safe upgrades."
+msgstr ""
+
+#: includes/Settings.php:299
+msgid "Export settings"
+msgstr ""
+
+#: includes/Settings.php:300
+msgid "Download the current settings as JSON."
+msgstr ""
+
+#: includes/Settings.php:303
+msgid "Download JSON"
+msgstr ""
+
+#: includes/Settings.php:310
+msgid "Import settings"
+msgstr ""
+
+#: includes/Settings.php:311
+msgid "Upload a previously exported JSON file to restore settings."
+msgstr ""
+
+#: includes/Settings.php:314
+msgid "Upload JSON"
+msgstr ""
+
+#: includes/Settings.php:322
+msgid "Noted! Settings"
+msgstr ""
+
+#: includes/Settings.php:323
+msgid "Control where notes appear and who can see them."
+msgstr ""
+
+#: includes/Settings.php:327
+msgid "Settings"
+msgstr ""
+
+#: includes/Settings.php:332
+msgid "Markdown"
+msgstr ""
+
+#: includes/Settings.php:336
+msgid "Supported Markdown in notes"
+msgstr ""
+
+#: includes/Settings.php:337
+msgid "Use these patterns in page notes, the floating panel, and anywhere else Noted stores a Markdown note body."
+msgstr ""
+
+#: includes/Settings.php:351
+msgid "Noted converts a small subset of Markdown into safe HTML. It is not a full Markdown specification — just the essentials for clear notes."
+msgstr ""

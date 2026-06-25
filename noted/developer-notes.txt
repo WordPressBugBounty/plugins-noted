@@ -1,0 +1,38 @@
+# Noted! Plugin Developer Notes
+
+This file contains code snippets and maintenance tasks intended for development and admin use only. Use these snippets with caution and remove them once tasks are completed to prevent unintended actions.
+
+---
+
+## Bulk Delete All Notes
+
+This snippet will delete all notes created by the Noted! plugin. To execute this deletion, temporarily add the following function to your theme’s `functions.php` file.
+
+### Code Snippet
+
+```php
+// Temporary function to delete all 'noted_note' posts.
+function delete_all_noted_notes() {
+    if (is_admin() && current_user_can('administrator')) {
+        $noted_notes = get_posts(array(
+            'post_type' => 'noted_note',
+            'numberposts' => -1,
+        ));
+        
+        foreach ($noted_notes as $note) {
+            wp_delete_post($note->ID, true); // Permanently delete
+        }
+
+        // Optional: Admin notice to confirm deletion.
+        add_action('admin_notices', function() {
+            echo '<div class="notice notice-success is-dismissible"><p>All Noted! notes have been deleted.</p></div>';
+        });
+    }
+}
+add_action('admin_init', 'delete_all_noted_notes');```
+
+### Instructions for Use
+Paste the Code: Add the code above to your theme’s functions.php file.
+Trigger Deletion: Load any admin page in your WordPress dashboard. This will execute the deletion of all noted_note posts.
+Confirmation Message: After execution, a success message will display at the top of the admin page.
+Remove the Code: After confirming the deletion, immediately remove the code from functions.php to avoid accidental future deletions.
