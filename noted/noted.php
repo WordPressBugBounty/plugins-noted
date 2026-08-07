@@ -4,7 +4,7 @@
 Plugin Name: Noted!
 Description: A simple note-taking system within the WordPress admin. Page-level and block-level notes included.
 Author: Kyle Van Deusen
-Version: 2.0.1
+Version: 2.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: noted

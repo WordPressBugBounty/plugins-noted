@@ -22,7 +22,10 @@ final class Assets
 {
     private const HANDLE_API             = 'noted-api';
     private const HANDLE_ICONS           = 'noted-icons';
-    private const HANDLE_CSS             = 'noted-css';
+
+    /** Public so {@see AdminBar::shouldRender()} can confirm the panel's CSS is present. */
+    public const HANDLE_CSS = 'noted-css';
+
     private const HANDLE_GLOBAL_PANEL    = 'noted-global-panel';
     private const HANDLE_EDITOR_SIDEBAR  = 'noted-editor-sidebar';
     private const HANDLE_BLOCK_NOTES     = 'noted-block-notes';

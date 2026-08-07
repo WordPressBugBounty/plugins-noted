@@ -3,7 +3,7 @@ Contributors: skvandeusen, tdrayson
 Tags: notes, admin, productivity, markdown, dashboard
 Requires at least: 5.3
 Tested up to: 6.9
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -68,6 +68,10 @@ Please open an issue on GitHub - [https://github.com/tdrayson/noted/issues](http
 
 == Changelog ==
 
+= 2.0.2 =
+* Fixed: Note fields no longer appear inside other plugins' preview iframes in the editor, such as the MetaSlider block.
+* Improved: Updated the settings framework — dropdowns on the settings page position correctly, and other plugins' admin notices no longer clutter the Noted! settings screen.
+
 = 2.0.1 =
 * Fixed: Block notes on server-rendered (dynamic) blocks no longer fail attribute validation.
 * Fixed: Noted panel uses full width on narrow viewports (still capped at 400px).
@@ -94,6 +98,9 @@ Please open an issue on GitHub - [https://github.com/tdrayson/noted/issues](http
 * Initial release of the Noted! plugin.
 
 == Upgrade Notice ==
+
+= 2.0.2 =
+Bugfix release: note fields no longer leak into other plugins' editor preview iframes, plus settings framework updates.
 
 = 2.0.1 =
 Bugfix release: block notes on dynamic blocks, panel width on small screens, and Windows settings asset paths.

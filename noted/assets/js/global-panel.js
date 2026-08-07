@@ -30,6 +30,14 @@ jQuery(document).ready(function ($) {
     /** Element to restore focus to after the panel closes. */
     let previouslyFocused = null;
 
+    // The panel ships with a `hidden` attribute so that markup rendered
+    // without these assets (e.g. leaked into another plugin's preview iframe)
+    // never shows. Reaching this line means the assets loaded, so reveal it.
+    const panelElement = document.getElementById('noted-panel');
+    if (panelElement) {
+        panelElement.removeAttribute('hidden');
+    }
+
     /**
      * Read the current post ID from the panel's data attribute.
      *

@@ -1,5 +1,9 @@
 == Changelog ==
 
+= 2.0.2 =
+* Fixed: Note fields no longer appear inside other plugins' preview iframes in the editor, such as the MetaSlider block.
+* Improved: Updated the settings framework — dropdowns on the settings page position correctly, and other plugins' admin notices no longer clutter the Noted! settings screen.
+
 = 2.0.1 =
 * Fixed: Block notes on server-rendered (dynamic) blocks no longer fail attribute validation.
 * Fixed: Noted panel uses full width on narrow viewports (still capped at 400px).

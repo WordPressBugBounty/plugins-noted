@@ -55,10 +55,17 @@ final class AdminBar
         }
 
         $postId = PostType::currentPostId();
+
+        // Rendered `hidden`; global-panel.js removes the attribute on init.
+        // Nothing can open the panel without that JS anyway, so tying
+        // visibility to it means a stray render (a document that emitted this
+        // markup without the assets) stays invisible instead of dumping form
+        // fields into the page.
         ?>
         <div
             id="noted-panel"
             class="noted-panel wp-admin-styling"
+            hidden
             role="dialog"
             aria-modal="true"
             aria-labelledby="noted-panel-title"
@@ -118,7 +125,37 @@ final class AdminBar
         if (! $this->settings->bool('show_global_panel', true)) {
             return false;
         }
-        return true;
+        if (! self::isDocumentRequest()) {
+            return false;
+        }
+
+        // The panel is inert — and visually broken — without its stylesheet
+        // and JS. Plugins that print a bare preview document and call
+        // wp_footer() directly (MetaSlider's block preview iframe) never run
+        // the enqueue pipeline, so this catches them generically instead of
+        // endpoint by endpoint. Footer assets print at priority 20, after
+        // this hook, so 'enqueued' is the expected state here.
+        return wp_style_is(Assets::HANDLE_CSS, 'enqueued')
+            || wp_style_is(Assets::HANDLE_CSS, 'done');
+    }
+
+    /**
+     * False for requests that can reach a footer hook without being a page a
+     * human is looking at — REST, AJAX, cron, XML-RPC, feeds and oEmbed
+     * iframes.
+     */
+    private static function isDocumentRequest(): bool
+    {
+        if (defined('REST_REQUEST') && REST_REQUEST) {
+            return false;
+        }
+        if (wp_doing_ajax() || wp_doing_cron()) {
+            return false;
+        }
+        if (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST) {
+            return false;
+        }
+        return ! is_feed() && ! is_embed();
     }
 
     /**

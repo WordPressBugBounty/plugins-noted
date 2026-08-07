@@ -7,30 +7,30 @@ namespace Composer\Autoload;
 class ComposerStaticInit0cddad5e04eb56d082784e561fb38ffe
 {
     public static $prefixLengthsPsr4 = array (
-        'W' => 
+        'W' =>
         array (
             'Wireframe\\' => 10,
         ),
-        'R' => 
+        'R' =>
         array (
             'Rakit\\Validation\\' => 17,
         ),
-        'N' => 
+        'N' =>
         array (
             'Noted\\' => 6,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Wireframe\\' => 
+        'Wireframe\\' =>
         array (
             0 => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src',
         ),
-        'Rakit\\Validation\\' => 
+        'Rakit\\Validation\\' =>
         array (
             0 => __DIR__ . '/..' . '/rakit/validation/src',
         ),
-        'Noted\\' => 
+        'Noted\\' =>
         array (
             0 => __DIR__ . '/../..' . '/includes',
         ),
@@ -40,6 +40,7 @@ class ComposerStaticInit0cddad5e04eb56d082784e561fb38ffe
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Noted\\AdminBar' => __DIR__ . '/../..' . '/includes/AdminBar.php',
         'Noted\\Assets' => __DIR__ . '/../..' . '/includes/Assets.php',
+        'Noted\\BlockNotes' => __DIR__ . '/../..' . '/includes/BlockNotes.php',
         'Noted\\Compatibility' => __DIR__ . '/../..' . '/includes/Compatibility.php',
         'Noted\\DashboardWidget' => __DIR__ . '/../..' . '/includes/DashboardWidget.php',
         'Noted\\Markdown' => __DIR__ . '/../..' . '/includes/Markdown.php',
@@ -113,8 +114,11 @@ class ComposerStaticInit0cddad5e04eb56d082784e561fb38ffe
         'Wireframe\\Admin\\AdminPage' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Admin/AdminPage.php',
         'Wireframe\\App' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/App.php',
         'Wireframe\\Config' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Config.php',
+        'Wireframe\\Framework\\Access\\AccessResolver' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Framework/Access/AccessResolver.php',
+        'Wireframe\\Framework\\Access\\ConfigAccessMap' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Framework/Access/ConfigAccessMap.php',
         'Wireframe\\Framework\\Conditions' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Framework/Conditions.php',
         'Wireframe\\Framework\\ConfigLoader' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Framework/ConfigLoader.php',
+        'Wireframe\\Framework\\Fields\\ActionField' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Framework/Fields/ActionField.php',
         'Wireframe\\Framework\\Fields\\BaseField' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Framework/Fields/BaseField.php',
         'Wireframe\\Framework\\Fields\\CheckboxField' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Framework/Fields/CheckboxField.php',
         'Wireframe\\Framework\\Fields\\CheckboxesField' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Framework/Fields/CheckboxesField.php',
@@ -145,8 +149,10 @@ class ComposerStaticInit0cddad5e04eb56d082784e561fb38ffe
         'Wireframe\\Framework\\Fields\\ToggleField' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Framework/Fields/ToggleField.php',
         'Wireframe\\Framework\\Fields\\UrlField' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Framework/Fields/UrlField.php',
         'Wireframe\\Framework\\Sanitizer' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Framework/Sanitizer.php',
+        'Wireframe\\Framework\\Unhandled' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Framework/Unhandled.php',
         'Wireframe\\Framework\\Validator' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Framework/Validator.php',
         'Wireframe\\Plugin' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Plugin.php',
+        'Wireframe\\Rest\\ActionController' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Rest/ActionController.php',
         'Wireframe\\Rest\\SettingsController' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Rest/SettingsController.php',
         'Wireframe\\Rest\\TableController' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Rest/TableController.php',
         'Wireframe\\Settings' => __DIR__ . '/..' . '/tdrayson/wp-wireframe/src/Settings.php',

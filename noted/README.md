@@ -70,6 +70,11 @@ Please use the [GitHub issue tracker](../../issues) to report bugs or request fe
 
 See [changelog.txt](changelog.txt) for the full release history.
 
+### 2.0.2
+
+- Fix note fields leaking into other plugins' editor preview iframes (MetaSlider block).
+- Update wp-wireframe to 1.0.6.
+
 ### 2.0.1
 
 - Fix block notes on server-rendered (dynamic) blocks.

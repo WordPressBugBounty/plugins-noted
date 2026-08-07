@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'kylevandeusen/noted',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'aa7cac82f3f6541067a9f31a9d6b5a5ef3d7b075',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'kylevandeusen/noted' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'aa7cac82f3f6541067a9f31a9d6b5a5ef3d7b075',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -29,9 +29,9 @@
             'dev_requirement' => false,
         ),
         'tdrayson/wp-wireframe' => array(
-            'pretty_version' => 'v1.0.5',
-            'version' => '1.0.5.0',
-            'reference' => 'd309333fd4ee4b9005a5673aecae83f4d4cb7dbe',
+            'pretty_version' => 'v1.0.6',
+            'version' => '1.0.6.0',
+            'reference' => 'b8367e7913f52292127d97b284d5ef9644cd4d7c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../tdrayson/wp-wireframe',
             'aliases' => array(),

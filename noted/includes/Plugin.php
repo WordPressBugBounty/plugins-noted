@@ -13,7 +13,7 @@ namespace Noted;
  */
 final class Plugin
 {
-    public const VERSION    = '2.0.1';
+    public const VERSION    = '2.0.2';
     public const OPTION_KEY = 'noted_settings';
 
     private static ?self $instance = null;
