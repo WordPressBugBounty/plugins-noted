@@ -70,6 +70,11 @@ Please use the [GitHub issue tracker](../../issues) to report bugs or request fe
 
 See [changelog.txt](changelog.txt) for the full release history.
 
+### 2.0.3
+
+- Markdown: inline code, no italics inside words, headings only at the start of a line, separate ordered/unordered lists, cleaner links.
+- Requires PHP 8.1 (matches the bundled dependencies).
+
 ### 2.0.2
 
 - Fix note fields leaking into other plugins' editor preview iframes (MetaSlider block).

@@ -61,13 +61,22 @@ final class MarkdownReference
             ],
             [
                 'title'  => __('Bold and italic', 'noted'),
-                'intro'  => __('Use asterisks or underscores. These can appear in the middle of a line.', 'noted'),
+                'intro'  => __(
+                    'Use asterisks or underscores. Underscores only work around whole words, '
+                    . 'so names like field_name stay as they are.',
+                    'noted'
+                ),
                 'sample' => implode("\n", [
                     '**important**',
                     '__also bold__',
                     '*emphasis*',
                     '_also italic_',
                 ]),
+            ],
+            [
+                'title'  => __('Inline code', 'noted'),
+                'intro'  => __('Wrap text in backticks to show it exactly as typed, in a code font.', 'noted'),
+                'sample' => 'Set the `social_links_x` field.',
             ],
             [
                 'title'  => __('Links', 'noted'),
@@ -134,7 +143,7 @@ final class MarkdownReference
     private static function unsupportedBullets(): array
     {
         return [
-            __('Fenced code blocks (triple backticks) and inline `code` ticks', 'noted'),
+            __('Fenced code blocks (triple backticks)', 'noted'),
             __('Images, blockquotes, horizontal rules, tables, footnotes', 'noted'),
             __('Strikethrough, task checkboxes, and other extensions', 'noted'),
         ];

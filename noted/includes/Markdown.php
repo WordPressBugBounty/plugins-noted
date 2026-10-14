@@ -7,11 +7,18 @@ namespace Noted;
 /**
  * Lightweight Markdown <-> HTML converter for note bodies.
  *
- * Supports headings, bold/italic, links, and (nested) ordered and unordered
- * lists. Not a full Markdown spec — just enough for the note UX.
+ * Supports headings, bold/italic, inline code, links, and (nested) ordered
+ * and unordered lists. Not a full Markdown spec — just enough for the note UX.
  */
 final class Markdown
 {
+    /**
+     * Placeholder delimiters (Unicode private-use characters) for spans that
+     * must not be touched by the other patterns: inline code and URLs.
+     */
+    private const TOKEN_OPEN  = "\u{E000}";
+    private const TOKEN_CLOSE = "\u{E001}";
+
     /**
      * Convert a Markdown-flavoured string to safe HTML.
      *
@@ -21,21 +28,54 @@ final class Markdown
      */
     public static function toHtml(string $text): string
     {
-        $text = str_replace(["\r\n", "\r"], "\n", $text);
+        $text = str_replace(["\r\n", "\r", self::TOKEN_OPEN, self::TOKEN_CLOSE], ["\n", "\n", '', ''], $text);
         $text = trim($text);
 
+        // Code spans and URLs are swapped for placeholders first, so their
+        // contents (field_names, ?a=1&b=2, /some_path_/) can't be read as
+        // emphasis or headings, then restored at the end.
+        $tokens  = [];
+        $protect = static function (string $html) use (&$tokens): string {
+            $tokens[] = $html;
+            return self::TOKEN_OPEN . (count($tokens) - 1) . self::TOKEN_CLOSE;
+        };
+
+        $text = preg_replace_callback(
+            '/`([^`\n]+)`/',
+            static fn (array $m): string => $protect('<code>' . esc_html($m[1]) . '</code>'),
+            $text
+        );
+        $text = preg_replace_callback(
+            '/<(https?:\/\/[^\s<>]+)>/',
+            static fn (array $m): string => $protect('<a href="' . esc_url($m[1]) . '">' . esc_html($m[1]) . '</a>'),
+            $text
+        );
+        $text = preg_replace_callback(
+            '/\[([^\]\n]*)\]\(([^)\s]*)\)/',
+            static fn (array $m): string => '[' . $m[1] . '](' . $protect(esc_url($m[2])) . ')',
+            $text
+        );
+        $text = preg_replace_callback(
+            // Trailing punctuation ("see https://x.com.") stays outside the link.
+            '/(^|[\s>(])(https?:\/\/[^\s<]*[^\s<.,;:!?\'")\]])/m',
+            static fn (array $m): string => $m[1] . $protect('<a href="' . esc_url($m[2]) . '">' . esc_html($m[2]) . '</a>'),
+            $text
+        );
+
         $inlinePatterns = [
-            '/\#{6}\s?(.*)/'                          => '<h6>$1</h6>',
-            '/\#{5}\s?(.*)/'                          => '<h5>$1</h5>',
-            '/\#{4}\s?(.*)/'                          => '<h4>$1</h4>',
-            '/\#{3}\s?(.*)/'                          => '<h3>$1</h3>',
-            '/\#{2}\s?(.*)/'                          => '<h2>$1</h2>',
-            '/\#{1}\s?(.*)/'                          => '<h1>$1</h1>',
-            '/\*\*(.*?)\*\*|__(.*?)__/'               => '<strong>$1$2</strong>',
-            '/\*(.*?)\*|_(.*?)_/'                     => '<em>$1$2</em>',
-            '/<(https?:\/\/[^\s<]+)>/'                => '<a href="$1">$1</a>',
-            '/\[(.*?)\]\((.*?)\)/'                    => '<a href="$2">$1</a>',
-            '/(^|[\s>])(https?:\/\/[^\s<]+)(?=\s|$)/' => '$1<a href="$2">$2</a>',
+            // Headings only at the start of a line, so "issue #42" stays text.
+            '/^\#{6}\s?(.*)$/m'                                                    => '<h6>$1</h6>',
+            '/^\#{5}\s?(.*)$/m'                                                    => '<h5>$1</h5>',
+            '/^\#{4}\s?(.*)$/m'                                                    => '<h4>$1</h4>',
+            '/^\#{3}\s?(.*)$/m'                                                    => '<h3>$1</h3>',
+            '/^\#{2}\s?(.*)$/m'                                                    => '<h2>$1</h2>',
+            '/^\#{1}\s?(.*)$/m'                                                    => '<h1>$1</h1>',
+            '/\*\*(?=\S)(.+?)(?<=\S)\*\*/u'                                        => '<strong>$1</strong>',
+            // Underscore emphasis never starts or ends inside a word (snake_case).
+            '/(?<![\p{L}\p{N}_])__(?=\S)(.+?)(?<=\S)__(?![\p{L}\p{N}_])/u'          => '<strong>$1</strong>',
+            '/\*(?=\S)(.+?)(?<=\S)\*/u'                                            => '<em>$1</em>',
+            '/(?<![\p{L}\p{N}_])_(?=\S)(.+?)(?<=\S)_(?![\p{L}\p{N}_])/u'            => '<em>$1</em>',
+            '/\[(.*?)\]\((' . self::TOKEN_OPEN . '\d+' . self::TOKEN_CLOSE . ')\)/u' => '<a href="$2">$1</a>',
         ];
 
         $html  = preg_replace(array_keys($inlinePatterns), array_values($inlinePatterns), $text);
@@ -90,7 +130,14 @@ final class Markdown
         // Collapse runs of 3+ blank lines down to a single paragraph break
         // so wpautop produces clean <p> separators rather than ragged gaps.
         $output = preg_replace('/\n{3,}/', "\n\n", $output);
-        return wp_kses_post(wpautop(trim($output)));
+        $output = wpautop(trim($output));
+        $output = preg_replace_callback(
+            '/' . self::TOKEN_OPEN . '(\d+)' . self::TOKEN_CLOSE . '/u',
+            static fn (array $m): string => $tokens[(int) $m[1]] ?? '',
+            $output
+        );
+
+        return wp_kses_post($output);
     }
 
     /**
@@ -101,6 +148,18 @@ final class Markdown
     public static function toMarkdown(string $html): string
     {
         $markdown = $html;
+
+        // Code spans become placeholders until the end, so the tag-strip
+        // step can't eat code like `<div>` and entities come back decoded.
+        $codes    = [];
+        $markdown = preg_replace_callback(
+            '/<code>(.*?)<\/code>/s',
+            static function (array $m) use (&$codes): string {
+                $codes[] = '`' . html_entity_decode($m[1], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '`';
+                return self::TOKEN_OPEN . (count($codes) - 1) . self::TOKEN_CLOSE;
+            },
+            $markdown
+        );
 
         // Paragraph and break tags become explicit newlines before the
         // generic tag-strip step runs, otherwise paragraph separators get
@@ -117,9 +176,11 @@ final class Markdown
         $markdown = preg_replace('/<h1[^>]*>(.*?)<\/h1>/', "\n# $1\n", $markdown);
 
         $markdown = preg_replace('/<strong>(.*?)<\/strong>/', '**$1**', $markdown);
-        $markdown = preg_replace('/<em>(.*?)<\/em>/', '_$1_', $markdown);
+        // Asterisks, not underscores: "a_b_c" no longer reads as emphasis.
+        $markdown = preg_replace('/<em>(.*?)<\/em>/', '*$1*', $markdown);
 
-        $markdown = preg_replace('/<a href="(.*?)">\1<\/a>/', '<$1>', $markdown);
+        // A bare URL (not <url>, which the tag-strip below would remove).
+        $markdown = preg_replace('/<a href="(.*?)">\1<\/a>/', '$1', $markdown);
         $markdown = preg_replace('/<a href="(.*?)">(.*?)<\/a>/', '[$2]($1)', $markdown);
 
         $lines     = explode("\n", $markdown);
@@ -168,9 +229,14 @@ final class Markdown
         }
 
         $markdown = implode("\n", $result);
-        $markdown = wp_strip_all_tags($markdown);
+        $markdown = html_entity_decode(wp_strip_all_tags($markdown), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $markdown = preg_replace('/\n{3,}/', "\n\n", $markdown);
         $markdown = preg_replace('/^(#{1,3}\s.*?)$/m', "\n$1\n", $markdown);
+        $markdown = preg_replace_callback(
+            '/' . self::TOKEN_OPEN . '(\d+)' . self::TOKEN_CLOSE . '/u',
+            static fn (array $m): string => $codes[(int) $m[1]] ?? '',
+            $markdown
+        );
 
         return trim($markdown);
     }
@@ -195,10 +261,20 @@ final class Markdown
         if (empty($listStack) || $indent > $currentIndent) {
             $output     .= $openTag;
             $listStack[] = ['type' => $type, 'indent' => $indent];
-        } elseif ($indent < $currentIndent) {
-            while (! empty($listStack) && end($listStack)['indent'] > $indent) {
-                $list    = array_pop($listStack);
-                $output .= $list['type'] === 'ul' ? "</ul>\n" : "</ol>\n";
+        } else {
+            if ($indent < $currentIndent) {
+                while (! empty($listStack) && end($listStack)['indent'] > $indent) {
+                    $list    = array_pop($listStack);
+                    $output .= $list['type'] === 'ul' ? "</ul>\n" : "</ol>\n";
+                }
+            }
+
+            // Switching between "-" and "1." at the same level starts a new list.
+            if (! empty($listStack) && end($listStack)['type'] !== $type) {
+                $list        = array_pop($listStack);
+                $output     .= $list['type'] === 'ul' ? "</ul>\n" : "</ol>\n";
+                $output     .= $openTag;
+                $listStack[] = ['type' => $type, 'indent' => $indent];
             }
         }
 

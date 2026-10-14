@@ -3,8 +3,8 @@ Contributors: skvandeusen, tdrayson
 Tags: notes, admin, productivity, markdown, dashboard
 Requires at least: 5.3
 Tested up to: 6.9
-Stable tag: 2.0.2
-Requires PHP: 7.4
+Stable tag: 2.0.3
+Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,14 @@ Please open an issue on GitHub - [https://github.com/tdrayson/noted/issues](http
 
 == Changelog ==
 
+= 2.0.3 =
+* Fixed: Inline `code` now works in notes. Text between backticks is shown exactly as typed.
+* Fixed: Underscores inside words (field_name, snake_case, URLs) are no longer turned into italics.
+* Fixed: A # in the middle of a line ("issue #42", "C#") no longer turns the rest of the line into a heading.
+* Fixed: A numbered list straight after a bulleted list (or the other way round) is now its own list.
+* Fixed: Links at the end of a sentence no longer include the full stop, and bare links survive editing older notes.
+* Fixed: "Requires PHP" now says 8.1, the version Noted! actually needs, so WordPress won't activate it on older PHP and break the site.
+
 = 2.0.2 =
 * Fixed: Note fields no longer appear inside other plugins' preview iframes in the editor, such as the MetaSlider block.
 * Improved: Updated the settings framework — dropdowns on the settings page position correctly, and other plugins' admin notices no longer clutter the Noted! settings screen.
@@ -98,6 +106,9 @@ Please open an issue on GitHub - [https://github.com/tdrayson/noted/issues](http
 * Initial release of the Noted! plugin.
 
 == Upgrade Notice ==
+
+= 2.0.3 =
+Markdown fixes (inline code, underscores in words, # mid-line) and the correct PHP requirement (8.1).
 
 = 2.0.2 =
 Bugfix release: note fields no longer leak into other plugins' editor preview iframes, plus settings framework updates.
